@@ -9,7 +9,7 @@ main() {
                                 --output json \
                                 | jq -r '[.Entities[].Id] | join(" ")') \
         --output json \
-        --query 'Reservations[].Instances[].{Id:InstanceId, Name:Tags[?Key==`Name`].Value, LaunchTime:LaunchTime}' \
+        --query 'sort_by(Reservations[].Instances[].{Id:InstanceId, Name:Tags[?Key==`Name`].Value, LaunchTime:LaunchTime}, &Name[0])' \
         | jq -r '.[] | (.Id) + "       " + (.Name[0])  + "       " + (.LaunchTime)' \
         | peco)
 
