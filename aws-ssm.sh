@@ -5,7 +5,7 @@ set -eux
 main() {
     local selected=$(aws ec2 describe-instances \
         --instance-ids $(aws ssm get-inventory \
-                                --filters "Key=AWS:InstanceInformation.InstanceStatus,Values=Terminated,Type=NotEqual" \
+                                --filters "Key=AWS:InstanceInformation.InstanceStatus,Values=Terminated,Stopped,Type=NotEqual" \
                                 --output json \
                                 | jq -r '[.Entities[].Id] | join(" ")') \
         --output json \
